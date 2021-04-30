@@ -26,7 +26,7 @@ public class ParkingRest {
 	@GetMapping("/WS/parking/CA/{id}")
 	public String getCA(@PathVariable Integer id) {
 		
-		return "CA : "+parkingManager.getCAByParking(id).toString() + " €";
+		return "CA : "+parkingManager.calculateCAByParking(parkingManager.getParkingById(id)) + " €";
 		 
 	}
 
