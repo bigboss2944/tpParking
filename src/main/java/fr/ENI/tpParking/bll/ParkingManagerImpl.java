@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.ENI.tpParking.bll.ticket.TicketManager;
 import fr.ENI.tpParking.bo.Parking;
 import fr.ENI.tpParking.bo.Ticket;
 import fr.ENI.tpParking.bo.Vehicule;
@@ -16,6 +17,9 @@ public class ParkingManagerImpl implements ParkingManager {
 
 	@Autowired
 	ParkingDAO parkingDAO;
+	
+	@Autowired
+	TicketManager ticketManager;
 	
 	@Override
 	public void addParking(Parking parking) throws ParkingManagerException {
@@ -87,9 +91,12 @@ public class ParkingManagerImpl implements ParkingManager {
 		}
 		else {
 			
-			Integer nbPlaces = parkingDAO.CountVehiculeByParking(idParking).size();
+			Integer nbPlaces = getPlacesAvailable(parking);
+			Ticket ticket = new Ticket(parking, vehicule, LocalDateTime.now());
 			
-			parking.setNbrePlaces(nbPlaces-1);
+			ticketManager.addTicket(ticket);
+			
+			parking.setNbrePlaces(nbPlaces);
 			updateParking(parking);
 		}
 
