@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Véhicule</title>
+</head>
+<body>
+<div th:switch="${ticket.idTicket}">
+    <h2 th:case="null">Vous n'êtes pas garé ! Choisissez un parking <a href="#">ici</a></h2>
+    <div th:case="*">
+        <h2>Voici votre ticket d'arrivée</h2>
+        Parking à:
+        <p th:text="${ticket.parking.adresse}"></p>
+        Date et heure d'arrivée:
+        <p th:text="${ticket.dateHeureArrivee}"></p>
+        Tarif horaire (€):
+        <p th:text="${ticket.parking.tarifHoraire}"></p>
+        <a href="#"><button>Sortir</button></a>    
+    </div>      
+    
+</div>
+</body>
+</html>

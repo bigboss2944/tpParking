@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Véhicule</title>
+</head>
+<body>
+<div th:switch="${vehicules}">
+    <h2 th:case="null">Pas de vehicules pour l'instant !</h2>
+        <div th:case="*">
+            <h2>Listes des vehicules</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Immatriculation</th>
+                        <th>Marque</th>
+                        <th>Modèle</th>
+                        <th>Modifier</th>
+                        <th>Effacer</th>
+                        <th>Parking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vehicule : ${vehicules}">
+                    <td th:text="${vehicule.immat}"></td>
+                    <td th:text="${vehicule.marque}"></td>
+                    <td th:text="${vehicule.modele}"></td>
+                    <td><a th:href="@{/vehicule/edit/{id}(id=${vehicule.idVehicule})}">Modifier</a></td>
+                    <td><a th:href="@{/vehicule/delete/{id}(id=${vehicule.idVehicule})}">Effacer</a></td>
+                    <td ><a th:href="@{/ticket/vehicule-entrer/{idVehicule}(idVehicule=${vehicule.idVehicule})}">Ticket</a> </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>      
+    <p><a href="/vehicule/saisie">Ajouter un nouveau vehicule</a></p>
+</div>
+</body>
+</html>

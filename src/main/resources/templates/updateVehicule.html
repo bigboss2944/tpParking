@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Modification d'un véhicule</title>
+</head>
+<body>
+<form action="#" 
+  th:action="@{/vehicule/update/{id}(id=${vehicule.idVehicule})}" 
+  th:object="${vehicule}" 
+  method="post">
+    <label for="immat">Immatriculation</label>
+    <input type="text" th:field="*{immat}" id="immat" placeholder="Imatriculation">
+    <span th:if="${#fields.hasErrors('immat')}" th:errors="*{immat}"></span>
+    <label for="marque">Marque</label>
+    <input type="text" th:field="*{marque}" id="marque" placeholder="marque">
+    <span th:if="${#fields.hasErrors('marque')}" th:errors="*{marque}"></span>
+    <label for="modele">Modèle</label>
+    <input type="text" th:field="*{modele}" id="modele" placeholder="modele">
+    <span th:if="${#fields.hasErrors('modele')}" th:errors="*{modele}"></span>
+    <input type="submit" value="Mise à jour"> 
+</form>
+</body>
+</html>

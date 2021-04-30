@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:switch="${tickets}">
+		<h2 th:case="null">Pas de tickets pour l'instant !</h2>
+		<div th:case="*">
+			<h2>Mes tickets</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>nom</th>
+						<th>description</th>
+						<th>Modifier</th>
+						<th>Effacer</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ticket : ${tickets}">
+						<td th:text="${ticket.nom}"></td>
+						<td th:text="${ticket.description}"></td>
+						<td><a th:href="@{/ticket/edit/{id}(id=${ticket.idticket})}">Modifier</a></td>
+						<td><a
+							th:href="@{/ticket/delete/{id}(id=${ticket.idticket})}">Effacer</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/ticket/saisie">Ajouter un nouveau ticket</a>
+		</p>
+	</div>
+</body>
+</html>

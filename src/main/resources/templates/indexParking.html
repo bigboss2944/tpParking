@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:switch="${parkings}">
+		<h2 th:case="null">Pas de parkings pour l'instant !</h2>
+		<div th:case="*">
+			<h2>Mes parkings</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>nom</th>
+						<th>description</th>
+						<th>Modifier</th>
+						<th>Effacer</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="parking : ${parkings}">
+						<td th:text="${parking.nom}"></td>
+						<td th:text="${parking.description}"></td>
+						<td><a th:href="@{/parking/edit/{id}(id=${parking.idparking})}">Modifier</a></td>
+						<td><a
+							th:href="@{/parking/delete/{id}(id=${parking.idparking})}">Effacer</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/parking/saisie">Ajouter un nouveau parking</a>
+		</p>
+	</div>
+</body>
+</html>
