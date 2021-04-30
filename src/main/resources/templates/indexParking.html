@@ -17,6 +17,7 @@
 						<th>nbrePlaces</th>
 						<th>tarifHoraire</th>
 						<th>nombre de places disponible</th>
+						
 						<th>Modifier</th>
 						<th>Effacer</th>
 					</tr>
@@ -29,6 +30,8 @@
 						<td th:text="${parking.tarifHoraire}"></td>
 						<td th:text="${parking.nbrePlaces}"></td>
 						
+						
+						<td><a th:href="@{/parking/details/{id}(id=${parking.idParking})}">Details</a></td>
 						<td><a th:href="@{/parking/edit/{id}(id=${parking.idParking})}">Modifier</a></td>
 						<td><a
 							th:href="@{/parking/delete/{id}(id=${parking.idParking})}">Effacer</a></td>

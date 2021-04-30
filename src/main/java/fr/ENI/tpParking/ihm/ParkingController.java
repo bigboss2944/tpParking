@@ -103,5 +103,19 @@ public class ParkingController {
 	    return "redirect:/parking/index";
 	}
 	
+	@GetMapping("/parking/details/{id}")
+	public String detailsParking(@PathVariable("id") Integer idParking, Model model) {
+		
+		Parking parking = parkingManager.getParkingById(idParking);
+		
+		
+		
+		model.addAttribute("totalCA", parkingManager.calculateCAByParking(parking));	
+		model.addAttribute("parking", parking);
+		
+		return "detailsParking";
+	}
+	
+	
 	
 }

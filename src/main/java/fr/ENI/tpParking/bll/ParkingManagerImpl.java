@@ -138,7 +138,10 @@ public class ParkingManagerImpl implements ParkingManager {
 		
 		for (Ticket ticket : parking.getListTicket()) {
 			LocalDateTime dateHeureDepart = ticket.getDateHeureDepart();
-			totalCA = dateHeureDepart.minusHours(ticket.getDateHeureArrivee().getHour()).getHour()*parking.getTarifHoraire();
+			
+			if(dateHeureDepart!=null) {
+				totalCA = dateHeureDepart.minusHours(ticket.getDateHeureArrivee().getHour()).getHour()*parking.getTarifHoraire();
+			}
 		}
 		
 		return totalCA;

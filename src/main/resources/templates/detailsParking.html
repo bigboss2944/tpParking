@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2>Details parking </h2>
+
+	<label for="idParking">idParking</label>
+	<p th:text="${parking.idParking}"></p>
+	
+	<label for="adresse">Adresse</label>
+	<p th:text="${parking.adresse}"></p>
+	
+	<label for="nbrePlaces">Nombre de places</label>
+	<p th:text="${parking.nbrePlaces}"></p>
+	
+	<label for="tarif horaire">tarif horaire</label>
+	<p th:text="${parking.tarifHoraire}"></p>
+	
+	<label for="totalCA">total CA : </label>
+	<p th:text="${totalCA}"></p>
+						
+
+
+</body>
+</html>
