@@ -21,9 +21,9 @@ import lombok.Setter;
 @Data
 @Getter @Setter
 @NoArgsConstructor
-@JsonIdentityInfo(
-generator = ObjectIdGenerators.PropertyGenerator.class, 
-property = "idVehicule")
+//@JsonIdentityInfo(
+//generator = ObjectIdGenerators.PropertyGenerator.class, 
+//property = "idVehicule")
 
 public class Vehicule {
 	@Id
