@@ -91,13 +91,18 @@ public class ParkingManagerImpl implements ParkingManager {
 		}
 		else {
 			
-			Integer nbPlaces = getPlacesAvailable(parking);
+			
+			
 			Ticket ticket = new Ticket(parking, vehicule, LocalDateTime.now());
 			
 			ticketManager.addTicket(ticket);
 			
+			Integer nbPlaces = getPlacesAvailable(parking);
+			System.out.println("Le nombres de places restantes est de : "+nbPlaces);
 			parking.setNbrePlaces(nbPlaces);
 			updateParking(parking);
+			
+			
 		}
 
 	}
