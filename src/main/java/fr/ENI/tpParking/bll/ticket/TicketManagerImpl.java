@@ -1,12 +1,14 @@
-package fr.ENI.tpParking.bll;
+package fr.ENI.tpParking.bll.ticket;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import fr.ENI.tpParking.bo.Ticket;
-import fr.ENI.tpParking.dao.TicketDAO;
+import fr.ENI.tpParking.dal.TicketDAO;
 
+@Service
 public class TicketManagerImpl implements TicketManager {
 
 	@Autowired
@@ -54,6 +56,17 @@ public class TicketManagerImpl implements TicketManager {
 	public Ticket getTicketById(Integer idTicket) {
 		// TODO Auto-generated method stub
 		return ticketDAO.findById(idTicket).orElse(null);
+	}
+
+	@Override
+	public Ticket getByVehiculeAndDepart(Integer id) {
+		return ticketDAO.findByByVehiculeAndDepart(id);
+	}
+
+	@Override
+	public List<Ticket> getByVehicule(Integer id) {
+		
+		return ticketDAO.findByByIdVehicule(id);
 	}
 
 }

@@ -1,4 +1,4 @@
-package fr.ENI.tpParking.bll;
+package fr.ENI.tpParking.bll.ticket;
 
 import java.util.List;
 
@@ -17,4 +17,8 @@ public interface TicketManager {
 	public Ticket getTicketByVehiculeImmat(String immat);
 	
 	public List<Ticket> getListTicketByVehiculeImmat(String immat);
+	
+	public Ticket getByVehiculeAndDepart(Integer id);
+
+	public List<Ticket> getByVehicule(Integer id);
 }
