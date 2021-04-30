@@ -2,6 +2,7 @@ package fr.ENI.tpParking.ihm;
 
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,14 @@ public class VehiculeController {
 	}
 
 	@PostMapping("/vehicule/add")
-	public String addVehicule(@Valid Vehicule vehicule, BindingResult result, Model model) {
+	public String addVehicule(@Valid Vehicule vehicule, BindingResult result, Model model, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
 			return "addVehicule";
 		}
 		try {
 			vehiculeManager.addVehicule(vehicule);
+			
 		} catch (VehiculeManagerException e) {
 			result.rejectValue("immat", "error.vehicule", e.getMessage());
 			return "addVehicule";

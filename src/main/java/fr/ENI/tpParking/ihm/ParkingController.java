@@ -1,5 +1,7 @@
 package fr.ENI.tpParking.ihm;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.ENI.tpParking.bll.ParkingManager;
 import fr.ENI.tpParking.bll.ParkingManagerException;
+import fr.ENI.tpParking.bll.vehicule.VehiculeManager;
 import fr.ENI.tpParking.bo.Parking;
+import fr.ENI.tpParking.bo.Vehicule;
 
 @Controller
 public class ParkingController {
 	
 	@Autowired
 	ParkingManager parkingManager;
+	
+	@Autowired
+	VehiculeManager vehiculeManager;
 	
 	
 	@GetMapping("/parking/saisie")
@@ -79,10 +86,14 @@ public class ParkingController {
 	}
 	
 	@GetMapping("/parking/seGarer/{id}")
-	public String seGarer(@PathVariable("id") Integer idParking, Model model) {
+	public String seGarer(@PathVariable("id") Integer idParking, Model model, HttpServletRequest request) {
 		
 		Parking parking = parkingManager.getParkingById(idParking);
 		try {
+			HttpSession session = request.getSession();
+			
+			Integer idVehicule = (Integer) session.getAttribute("idVehicule");
+			Vehicule vehicule = vehiculeManager.getById(idVehicule);
 			parkingManager.addVehiculeToParking(idParking, vehicule);
 		} catch (ParkingManagerException e) {
 			// TODO Auto-generated catch block

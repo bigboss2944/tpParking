@@ -5,9 +5,11 @@ package fr.ENI.tpParking.ihm;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import fr.ENI.tpParking.bll.ticket.TicketManager;
 import fr.ENI.tpParking.bll.ticket.TicketManagerException;
 import fr.ENI.tpParking.bo.Ticket;
+import fr.ENI.tpParking.bo.Vehicule;
 
 
 @Controller
@@ -77,8 +80,11 @@ public class TicketController {
 	}
 	
 	@GetMapping("/ticket/vehicule-entrer/{idVehicule}")
-	public String showTicketArrivee(@PathVariable("idVehicule") Integer id, Model model) {	
+	public String showTicketArrivee(@PathVariable("idVehicule") Integer id, Model model, HttpServletRequest request) {	
 		List<Ticket> listTickets = ticketManager.getByVehicule(id);
+		
+		request.getSession().setAttribute("idVehicule",id);
+		
 		Ticket ticketCurrent=new Ticket();
 		for (Ticket ticket : listTickets) {
 			if(ticket.getDateHeureDepart() ==null) {

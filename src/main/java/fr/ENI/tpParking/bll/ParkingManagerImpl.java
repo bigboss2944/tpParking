@@ -76,6 +76,9 @@ public class ParkingManagerImpl implements ParkingManager {
 	public void addVehiculeToParking(Integer idParking, Vehicule vehicule) throws ParkingManagerException {
 		// TODO Auto-generated method stub
 		Parking parking = getParkingById(idParking);
+		System.out.println(parking.getNbrePlaces());
+		
+		
 		if(getPlacesAvailable(parking)==0) {
 			throw new ParkingManagerException("Il n'y a plus de places dans ce parking");
 		}
@@ -132,7 +135,7 @@ public class ParkingManagerImpl implements ParkingManager {
 	@Override
 	public Integer getPlacesAvailable(Parking parking) {
 		// TODO Auto-generated method stub
-		return parkingDAO.CountVehiculeByParking(parking.getIdParking()).size();
+		return parking.getNbrePlaces()-parkingDAO.CountVehiculeByParking(parking.getIdParking()).size();
 	}
 
 	@Override
