@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.ENI.tpParking.bo.Ticket;
 import fr.ENI.tpParking.bo.Vehicule;
 import fr.ENI.tpParking.dal.VehiculeDAO;
 
@@ -55,5 +56,18 @@ public class VehiculeManagerImpl implements VehiculeManager {
 	@Override
 	public void removeVehiculeFromId(Integer id) {
 		VehiculeDAO.deleteById(id);
+	}
+
+	
+	@Override
+	public List<Ticket> getByImmat(String immat) {
+		// TODO Auto-generated method stub
+		List<Vehicule> listVehicule = VehiculeDAO.findByImmat(immat);
+		List<Ticket> listTicket = null;
+		for (Vehicule vehicule : listVehicule) {
+			vehicule.getListTicket();
+		}
+		
+		return listTicket;
 	}
 }

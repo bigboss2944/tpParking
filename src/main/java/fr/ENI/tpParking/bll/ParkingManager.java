@@ -28,4 +28,6 @@ public interface ParkingManager {
 	public boolean checkHourArrival(LocalDateTime heureArrivee);
 	
 	public boolean checkDateDeparture(Ticket ticket, LocalDateTime heureDepart);
+	public List<Vehicule> getListVehiculesCurrent(Integer idParking);
+	public Float getCAByParking(Integer idParking);
 }

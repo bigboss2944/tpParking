@@ -12,19 +12,30 @@
 			<table>
 				<thead>
 					<tr>
-						<th>nom</th>
-						<th>description</th>
+						<th>id</th>
+						<th>adresse</th>
+						<th>tarifHoraire</th>
+						<th>nombre de places disponible</th>
+						
 						<th>Modifier</th>
 						<th>Effacer</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="parking : ${parkings}">
-						<td th:text="${parking.nom}"></td>
-						<td th:text="${parking.description}"></td>
-						<td><a th:href="@{/parking/edit/{id}(id=${parking.idparking})}">Modifier</a></td>
+						<td th:text="${parking.idParking}"></td>
+						<td th:text="${parking.adresse}"></td>
+						<td th:text="${parking.tarifHoraire}"></td>
+						<td th:text="${parking.nbrePlaces}"></td>
+						
+						
+						<td><a th:href="@{/parking/details/{id}(id=${parking.idParking})}">Details</a></td>
+						<td><a th:href="@{/parking/edit/{id}(id=${parking.idParking})}">Modifier</a></td>
 						<td><a
-							th:href="@{/parking/delete/{id}(id=${parking.idparking})}">Effacer</a></td>
+							th:href="@{/parking/delete/{id}(id=${parking.idParking})}">Effacer</a></td>
+							
+						<td><a th:href="@{/parking/seGarer/{id}(id=${parking.idParking})}">Se garer ici</a></td>	
+							
 					</tr>
 				</tbody>
 			</table>

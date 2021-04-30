@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Véhicule</title>
+<title>Ticket</title>
 </head>
 <body>
 <div th:switch="${ticket.idTicket}">
-    <h2 th:case="null">Vous n'êtes pas garé ! Choisissez un parking <a href="#">ici</a></h2>
+    <h2 th:case="null">Vous n'êtes pas garé ! Choisissez un parking <a href="/parking/index">ici</a></h2>
     <div th:case="*">
         <h2>Voici votre ticket d'arrivée</h2>
         Parking à:
@@ -15,7 +15,7 @@
         <p th:text="${ticket.dateHeureArrivee}"></p>
         Tarif horaire (€):
         <p th:text="${ticket.parking.tarifHoraire}"></p>
-        <a href="#"><button>Sortir</button></a>    
+        <a th:href="@{/ticket/vehicule-sortir/{idTicket}(idTicket=${ticket.idTicket})}"><button>Sortir</button></a>     
     </div>      
     
 </div>

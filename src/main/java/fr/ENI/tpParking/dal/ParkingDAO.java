@@ -1,4 +1,4 @@
-package fr.ENI.tpParking.dao;
+package fr.ENI.tpParking.dal;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import fr.ENI.tpParking.bo.Ticket;
 public interface ParkingDAO extends CrudRepository<Parking, Integer> {
 
 	
-	@Query("from Ticket t where t.dateHeureDepart = null and t.parking.id = :idParking")
+	@Query("from Ticket t where t.dateHeureDepart = NULL and t.parking.id = :idParking")
 	List<Ticket> CountVehiculeByParking(@Param("idParking")Integer idParking);
 	
 	

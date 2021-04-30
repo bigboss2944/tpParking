@@ -6,14 +6,20 @@
 </head>
 <body>
 <form 
-  th:action="@{/parking/update/{id}(id=${parking.idparking})}" 
+  th:action="@{/parking/update/{id}(id=${parking.idParking})}" 
   th:object="${parking}" 
   method="post">
-    <label for="nom">Nom</label>
-    <input type="text" th:field="*{nom}" id="nom" placeholder="Nom">
-    <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
-    <input type="text" th:field="*{description}" id="description" placeholder="Description">
-    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+    <label for="adresse">Adresse</label>
+    <input type="text" th:field="*{adresse}" id="adresse" placeholder="Adresse">
+    <span th:if="${#fields.hasErrors('adresse')}" th:errors="*{adresse}"></span>
+    
+    <label for="nbrePlaces">nbrePlaces</label>
+    <input type="number" th:field="*{nbrePlaces}" id="nbrePlaces" placeholder="nombres de places">
+    <span th:if="${#fields.hasErrors('nbrePlaces')}" th:errors="*{nbrePlaces}"></span>
+    
+     <label for="tarifHoraire">tarifHoraire</label>
+    <input type="number" th:field="*{tarifHoraire}" id="tarifHoraire" placeholder="tarif">
+    <span th:if="${#fields.hasErrors('tarifHoraire')}" th:errors="*{tarifHoraire}"></span>
     <input type="submit" value="Mise à jour">   
 </form>
 </body>

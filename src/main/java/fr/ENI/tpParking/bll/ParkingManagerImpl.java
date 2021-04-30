@@ -1,21 +1,31 @@
 package fr.ENI.tpParking.bll;
 
+import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.ENI.tpParking.bll.ticket.TicketManager;
 import fr.ENI.tpParking.bo.Parking;
 import fr.ENI.tpParking.bo.Ticket;
 import fr.ENI.tpParking.bo.Vehicule;
-import fr.ENI.tpParking.dao.ParkingDAO;
+import fr.ENI.tpParking.dal.ParkingDAO;
+import fr.ENI.tpParking.dal.TicketDAO;
 
 @Service
 public class ParkingManagerImpl implements ParkingManager {
 
 	@Autowired
 	ParkingDAO parkingDAO;
+	
+	@Autowired
+	TicketDAO ticketDAO;
+	
+	@Autowired
+	TicketManager ticketManager;
 	
 	@Override
 	public void addParking(Parking parking) throws ParkingManagerException {
@@ -76,6 +86,9 @@ public class ParkingManagerImpl implements ParkingManager {
 	public void addVehiculeToParking(Integer idParking, Vehicule vehicule) throws ParkingManagerException {
 		// TODO Auto-generated method stub
 		Parking parking = getParkingById(idParking);
+		System.out.println(parking.getNbrePlaces());
+		
+		
 		if(getPlacesAvailable(parking)==0) {
 			throw new ParkingManagerException("Il n'y a plus de places dans ce parking");
 		}
@@ -84,10 +97,18 @@ public class ParkingManagerImpl implements ParkingManager {
 		}
 		else {
 			
-			Integer nbPlaces = parkingDAO.CountVehiculeByParking(idParking).size();
 			
-			parking.setNbrePlaces(nbPlaces-1);
+			
+			Ticket ticket = new Ticket(parking, vehicule, LocalDateTime.now());
+			
+			ticketManager.addTicket(ticket);
+			
+			Integer nbPlaces = getPlacesAvailable(parking);
+			System.out.println("Le nombres de places restantes est de : "+nbPlaces);
+			parking.setNbrePlaces(nbPlaces);
 			updateParking(parking);
+			
+			
 		}
 
 	}
@@ -99,7 +120,7 @@ public class ParkingManagerImpl implements ParkingManager {
 		Ticket ticket = parkingDAO.GetCurrentTicketForAVehicule(idParking, vehicule.getIdVehicule());
 		
 		if(!checkDateDeparture(ticket,LocalDateTime.now())) {
-			throw new ParkingManagerException("La date d'entrée et de sortie ne correspondent pas");
+			throw new ParkingManagerException("La date d'entrï¿½e et de sortie ne correspondent pas");
 		}
 		else {
 			Integer nbPlaces = getPlacesAvailable(parking);
@@ -123,7 +144,10 @@ public class ParkingManagerImpl implements ParkingManager {
 		
 		for (Ticket ticket : parking.getListTicket()) {
 			LocalDateTime dateHeureDepart = ticket.getDateHeureDepart();
-			totalCA = dateHeureDepart.minusHours(ticket.getDateHeureArrivee().getHour()).getHour()*parking.getTarifHoraire();
+			
+			if(dateHeureDepart!=null) {
+				totalCA = dateHeureDepart.minusHours(ticket.getDateHeureArrivee().getHour()).getHour()*parking.getTarifHoraire();
+			}
 		}
 		
 		return totalCA;
@@ -132,7 +156,7 @@ public class ParkingManagerImpl implements ParkingManager {
 	@Override
 	public Integer getPlacesAvailable(Parking parking) {
 		// TODO Auto-generated method stub
-		return parkingDAO.CountVehiculeByParking(parking.getIdParking()).size();
+		return parking.getNbrePlaces()-parkingDAO.CountVehiculeByParking(parking.getIdParking()).size();
 	}
 
 	@Override
@@ -160,6 +184,29 @@ public class ParkingManagerImpl implements ParkingManager {
 			return true;
 		}
 		
+	}
+	
+	@Override
+	public List<Vehicule> getListVehiculesCurrent(Integer idParking){
+	
+		return ticketDAO.findVehiculeByParkingAndDepart(idParking);
+	}
+	
+	@Override
+	public Float getCAByParking(Integer idParking) {
+		ticketDAO.findTicketByParkingAndDepart(idParking);
+		
+		Float totalCA = 0f;
+		
+		for (Ticket ticket : ticketDAO.findTicketByParkingAndDepart(idParking)) {
+			Duration duration = Duration.between(ticket.getDateHeureArrivee(), ticket.getDateHeureDepart());
+			Float prix = (ticket.getParking().getTarifHoraire())*(duration.toMinutes())/60;
+			totalCA += prix;
+		}
+		DecimalFormat df = new DecimalFormat("0.00"); 
+		Float totalCAArondi = Float.valueOf(df.format(totalCA));
+		
+		return totalCAArondi;
 	}
 
 }
