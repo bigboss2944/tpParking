@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ticket</title>
+</head>
+<body>
+
+        <h2>Voici votre ticket de départ</h2>
+        Parking à:
+        <p th:text="${ticket.parking.adresse}"></p>
+        Date et heure d'arrivée:
+        <p th:text="${ticket.dateHeureArrivee}"></p>
+        Date et heure de départ:
+        <p th:text="${ticket.dateHeureDepart}"></p>
+        Tarif horaire (€):
+        <p th:text="${ticket.parking.tarifHoraire}"></p>
+        Prix à payer (€):
+        <p th:text="${prix}"></p>
+        
+        <a href="/vehicule/index"><button>Back</button></a>    
+    
+</body>
+</html>

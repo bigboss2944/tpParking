@@ -15,7 +15,7 @@
     <span th:if="${#fields.hasErrors('nbrePlaces')}" th:errors="*{nbrePlaces}"></span>
     
      <label for="tarifHoraire">tarifHoraire</label>
-    <input type="number" th:field="*{tarifHoraire}" id="tarifHoraire" placeholder="tarif">
+    <input type="number" step="0.01" th:field="*{tarifHoraire}" id="tarifHoraire" placeholder="tarif">
     <span th:if="${#fields.hasErrors('tarifHoraire')}" th:errors="*{tarifHoraire}"></span>
     
     

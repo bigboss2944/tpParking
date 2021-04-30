@@ -2,6 +2,8 @@ package fr.ENI.tpParking.ihm;
 
 
 
+import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,11 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 import fr.ENI.tpParking.bll.ticket.TicketManager;
-import fr.ENI.tpParking.bll.ticket.TicketManagerException;
 import fr.ENI.tpParking.bo.Ticket;
-import fr.ENI.tpParking.bo.Vehicule;
 
 
 @Controller
@@ -100,7 +98,13 @@ public class TicketController {
 		Ticket ticket = ticketManager.getTicketById(id);
 		ticket.setDateHeureDepart(LocalDateTime.now());
 		ticketManager.updateTicket(ticket);
-		//model.addAttribute("prix", ticketCurrent);
+		Duration duration = Duration.between(ticket.getDateHeureArrivee(), ticket.getDateHeureDepart());
+		Float prix = (ticket.getParking().getTarifHoraire())*(duration.toMinutes())/60;
+		DecimalFormat df = new DecimalFormat("0.00"); 
+		Float prixArondi = Float.valueOf(df.format(prix));
+		System.out.println(prixArondi);
+		model.addAttribute("prix", prixArondi);
+		model.addAttribute("ticket", ticket);
 		
 	    return "ticketDepart";
 	}
