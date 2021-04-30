@@ -16,4 +16,14 @@ public interface TicketDAO extends CrudRepository<Ticket, Integer> {
 	@Query("SELECT t FROM Ticket t WHERE t.vehicule.idVehicule =:id")
 	List<Ticket> findByByIdVehicule(@Param("id") Integer id);
 
+	@Query("from Ticket t where t.dateHeureDepart = null and t.parking.id = :idParking")
+	List<Ticket> CountVehiculeByParking(@Param("idParking")Integer idParking);
+	
+	
+	@Query("from Ticket t where t.dateHeureDepart = null and t.vehicule.immat = :immatVehicule")
+	Ticket getTicketByVehiculeImmat(@Param("immatVehicule")String immat);
+	
+	@Query("from Ticket t where t.vehicule.immat = :immatVehicule")
+	List<Ticket> getListTicketByVehiculeImmat(@Param("immatVehicule")String immat);
+
 }

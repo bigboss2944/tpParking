@@ -21,12 +21,12 @@ public class ParkingController {
 	ParkingManager parkingManager;
 	
 	
-	@GetMapping("/tpParking/parking/saisie")
+	@GetMapping("/parking/saisie")
 	public String entreSaisie(Parking parking) {
 		return "addParking";
 	}
 	
-	@PostMapping("/tpParking/parking/add")
+	@PostMapping("/parking/add")
 	public String addParking(@Valid Parking parking, BindingResult result, Model model){
 		if (result.hasErrors()) {
 			return "addParking";
@@ -37,17 +37,17 @@ public class ParkingController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:/tpParking/parking/index"; // n'appelle pas l'html mais l'url
+		return "redirect:/parking/index"; // n'appelle pas l'html mais l'url
 
 	}
 	
-	@GetMapping("/tpParking/parking/index")
+	@GetMapping("/parking/index")
 	public String listParkings(Model model) {
 		model.addAttribute("parkings", parkingManager.getAllParking());
 		return "indexParking";
 	}
 	
-	@GetMapping("/tpParking/parking/edit/{id}")
+	@GetMapping("/parking/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer idParking, Model model) {
 		Parking parking = parkingManager.getParkingById(idParking);
 		model.addAttribute("parking", parking);
@@ -55,7 +55,7 @@ public class ParkingController {
 	}
 	
 	
-	@PostMapping("/tpParking/parking/update/{id}")
+	@PostMapping("/parking/update/{id}")
 	public String updateParking(@PathVariable("id") Integer idParking, @Valid Parking parking, BindingResult result,
 			Model model) {
 		parking.setIdParking(idParking);
@@ -68,14 +68,28 @@ public class ParkingController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:/tpParking/parking/index";
+		return "redirect:/parking/index";
 	}
 	
-	@GetMapping("/tpParking/client/delete/{id}")
+	@GetMapping("/parking/delete/{id}")
 	public String deleteParking(@PathVariable("id") Integer idParking, Model model) {	
 		parkingManager.deleteParking(idParking);
 		
-	    return "redirect:/client/index";
+	    return "redirect:/parking/index";
+	}
+	
+	@GetMapping("/parking/seGarer/{id}")
+	public String seGarer(@PathVariable("id") Integer idParking, Model model) {
+		
+		Parking parking = parkingManager.getParkingById(idParking);
+		try {
+			parkingManager.addVehiculeToParking(idParking, vehicule);
+		} catch (ParkingManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	    return "redirect:/parking/index";
 	}
 	
 	

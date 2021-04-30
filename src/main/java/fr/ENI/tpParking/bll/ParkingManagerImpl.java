@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import fr.ENI.tpParking.bo.Parking;
 import fr.ENI.tpParking.bo.Ticket;
 import fr.ENI.tpParking.bo.Vehicule;
-import fr.ENI.tpParking.dao.ParkingDAO;
+import fr.ENI.tpParking.dal.ParkingDAO;
 
 @Service
 public class ParkingManagerImpl implements ParkingManager {

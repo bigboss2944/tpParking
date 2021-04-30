@@ -1,72 +1,59 @@
-package fr.ENI.tpParking.bll.ticket;
+package fr.ENI.tpParking.bll;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import fr.ENI.tpParking.bo.Ticket;
-import fr.ENI.tpParking.bo.Vehicule;
-import fr.ENI.tpParking.dal.TicketDAO;
-import fr.ENI.tpParking.dal.VehiculeDAO;
+import fr.ENI.tpParking.dao.TicketDAO;
 
-
-
-
-@Service
 public class TicketManagerImpl implements TicketManager {
 
 	@Autowired
-	TicketDAO TicketDAO;
-	
-	
+	TicketDAO ticketDAO;
 	
 	@Override
-	@Transactional
-	public void addTicket(Ticket ticket)  {
-			TicketDAO.save(ticket);
+	public void addTicket(Ticket ticket) {
+		// TODO Auto-generated method stub
+		ticketDAO.save(ticket);
 	}
 
 	@Override
-	@Transactional
-	public void removeTicket(Ticket ticket) {
-		TicketDAO.delete(ticket);
-	}
-
-	@Override
-	@Transactional
 	public void updateTicket(Ticket ticket) {
-		TicketDAO.save(ticket);
+		// TODO Auto-generated method stub
+		ticketDAO.save(ticket);
+
+	}
+
+	@Override
+	public void deleteTicket(Integer idTicket) {
+		// TODO Auto-generated method stub
+		ticketDAO.deleteById(idTicket);
+
 	}
 
 	@Override
 	public List<Ticket> getAllTicket() {
-		return (List<Ticket>) TicketDAO.findAll();
+		// TODO Auto-generated method stub
+		return (List<Ticket>) ticketDAO.findAll();
 	}
 
 	@Override
-	public Ticket getById(Integer id) {
-		return TicketDAO.findById(id).orElse(null);
+	public Ticket getTicketByVehiculeImmat(String immat) {
+		// TODO Auto-generated method stub
+		return (Ticket) ticketDAO.getTicketByVehiculeImmat(immat);
 	}
 
 	@Override
-	public void removeTicketFromId(Integer id) {
-		TicketDAO.deleteById(id);
-	}
-	
-	
-	@Override
-	public Ticket getByVehiculeAndDepart(Integer id) {
-		return TicketDAO.findByByVehiculeAndDepart(id);
+	public List<Ticket> getListTicketByVehiculeImmat(String immat) {
+		// TODO Auto-generated method stub
+		return (List<Ticket>) ticketDAO.getListTicketByVehiculeImmat(immat);
 	}
 
 	@Override
-	public List<Ticket> getByVehicule(Integer id) {
-		
-		return TicketDAO.findByByIdVehicule(id);
+	public Ticket getTicketById(Integer idTicket) {
+		// TODO Auto-generated method stub
+		return ticketDAO.findById(idTicket).orElse(null);
 	}
-	
-	
+
 }

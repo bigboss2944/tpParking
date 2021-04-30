@@ -1,7 +1,7 @@
 package fr.ENI.tpParking.bo;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,10 +11,13 @@ import javax.persistence.ManyToOne;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter @Setter
 @NoArgsConstructor
 public class Ticket {
 	

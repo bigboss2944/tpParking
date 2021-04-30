@@ -1,4 +1,4 @@
-package fr.ENI.tpParking.dao;
+package fr.ENI.tpParking.dal;
 
 import java.util.List;
 
