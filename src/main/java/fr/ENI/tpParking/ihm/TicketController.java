@@ -98,12 +98,19 @@ public class TicketController {
 		Ticket ticket = ticketManager.getTicketById(id);
 		ticket.setDateHeureDepart(LocalDateTime.now());
 		ticketManager.updateTicket(ticket);
-		Duration duration = Duration.between(ticket.getDateHeureArrivee(), ticket.getDateHeureDepart());
-		Float prix = (ticket.getParking().getTarifHoraire())*(duration.toMinutes())/60;
-		DecimalFormat df = new DecimalFormat("0.00"); 
-		Float prixArondi = Float.valueOf(df.format(prix));
-		System.out.println(prixArondi);
-		model.addAttribute("prix", prixArondi);
+		LocalDateTime dateHeureDepart = ticket.getDateHeureDepart();
+		
+		Float prix = dateHeureDepart.minusHours(ticket.getDateHeureArrivee().getHour()).getHour()*ticket.getParking().getTarifHoraire();
+		
+//		Duration duration = Duration.between(ticket.getDateHeureArrivee(), ticket.getDateHeureDepart());
+//		System.out.println("La duree en min :" +(duration.toHours()*60 + duration.toMinutes()));
+//		Float prix = (ticket.getParking().getTarifHoraire())*(duration.toMinutes())/60;
+		
+//		DecimalFormat df = new DecimalFormat("0.00"); 
+//		Float prixArondi = Float.valueOf(df.format(prix));
+//		System.out.println(prixArondi);
+		
+		model.addAttribute("prix", prix);
 		model.addAttribute("ticket", ticket);
 		
 	    return "ticketDepart";

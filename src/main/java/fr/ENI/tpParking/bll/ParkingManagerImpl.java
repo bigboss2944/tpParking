@@ -199,14 +199,14 @@ public class ParkingManagerImpl implements ParkingManager {
 		Float totalCA = 0f;
 		
 		for (Ticket ticket : ticketDAO.findTicketByParkingAndDepart(idParking)) {
-			Duration duration = Duration.between(ticket.getDateHeureArrivee(), ticket.getDateHeureDepart());
-			Float prix = (ticket.getParking().getTarifHoraire())*(duration.toMinutes())/60;
+			LocalDateTime dateHeureDepart = ticket.getDateHeureDepart();
+			
+			Float prix = dateHeureDepart.minusHours(ticket.getDateHeureArrivee().getHour()).getHour()*ticket.getParking().getTarifHoraire();;
 			totalCA += prix;
 		}
-		DecimalFormat df = new DecimalFormat("0.00"); 
-		Float totalCAArondi = Float.valueOf(df.format(totalCA));
 		
-		return totalCAArondi;
+		
+		return totalCA;
 	}
 
 }
