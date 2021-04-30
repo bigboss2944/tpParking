@@ -1,5 +1,7 @@
 package fr.ENI.tpParking.bll;
 
+import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,12 +13,16 @@ import fr.ENI.tpParking.bo.Parking;
 import fr.ENI.tpParking.bo.Ticket;
 import fr.ENI.tpParking.bo.Vehicule;
 import fr.ENI.tpParking.dal.ParkingDAO;
+import fr.ENI.tpParking.dal.TicketDAO;
 
 @Service
 public class ParkingManagerImpl implements ParkingManager {
 
 	@Autowired
 	ParkingDAO parkingDAO;
+	
+	@Autowired
+	TicketDAO ticketDAO;
 	
 	@Autowired
 	TicketManager ticketManager;
@@ -114,7 +120,7 @@ public class ParkingManagerImpl implements ParkingManager {
 		Ticket ticket = parkingDAO.GetCurrentTicketForAVehicule(idParking, vehicule.getIdVehicule());
 		
 		if(!checkDateDeparture(ticket,LocalDateTime.now())) {
-			throw new ParkingManagerException("La date d'entrée et de sortie ne correspondent pas");
+			throw new ParkingManagerException("La date d'entrï¿½e et de sortie ne correspondent pas");
 		}
 		else {
 			Integer nbPlaces = getPlacesAvailable(parking);
@@ -178,6 +184,29 @@ public class ParkingManagerImpl implements ParkingManager {
 			return true;
 		}
 		
+	}
+	
+	@Override
+	public List<Vehicule> getListVehiculesCurrent(Integer idParking){
+	
+		return ticketDAO.findVehiculeByParkingAndDepart(idParking);
+	}
+	
+	@Override
+	public Float getCAByParking(Integer idParking) {
+		ticketDAO.findTicketByParkingAndDepart(idParking);
+		
+		Float totalCA = 0f;
+		
+		for (Ticket ticket : ticketDAO.findTicketByParkingAndDepart(idParking)) {
+			Duration duration = Duration.between(ticket.getDateHeureArrivee(), ticket.getDateHeureDepart());
+			Float prix = (ticket.getParking().getTarifHoraire())*(duration.toMinutes())/60;
+			totalCA += prix;
+		}
+		DecimalFormat df = new DecimalFormat("0.00"); 
+		Float totalCAArondi = Float.valueOf(df.format(totalCA));
+		
+		return totalCAArondi;
 	}
 
 }
