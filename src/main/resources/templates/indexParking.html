@@ -14,7 +14,6 @@
 					<tr>
 						<th>id</th>
 						<th>adresse</th>
-						<th>nbrePlaces</th>
 						<th>tarifHoraire</th>
 						<th>nombre de places disponible</th>
 						
@@ -26,7 +25,6 @@
 					<tr th:each="parking : ${parkings}">
 						<td th:text="${parking.idParking}"></td>
 						<td th:text="${parking.adresse}"></td>
-						<td th:text="${parking.nbrePlaces}"></td>
 						<td th:text="${parking.tarifHoraire}"></td>
 						<td th:text="${parking.nbrePlaces}"></td>
 						

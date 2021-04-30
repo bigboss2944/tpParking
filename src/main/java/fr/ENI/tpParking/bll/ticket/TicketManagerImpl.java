@@ -68,5 +68,12 @@ public class TicketManagerImpl implements TicketManager {
 		
 		return ticketDAO.findByByIdVehicule(id);
 	}
+	
+	
+	@Override
+	public List<Ticket> getByVehiculeImmat(String immat) {
+		
+		return ticketDAO.getListTicketByVehiculeImmat(immat);
+	}
 
 }

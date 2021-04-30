@@ -2,6 +2,7 @@ package fr.ENI.tpParking.bll.vehicule;
 
 import java.util.List;
 
+import fr.ENI.tpParking.bo.Ticket;
 import fr.ENI.tpParking.bo.Vehicule;
 
 /**
@@ -41,6 +42,9 @@ public interface VehiculeManager {
 	 * @return le vehicule ou null si non existant
 	 */
 	public Vehicule getById(Integer id);
+	
+	
+	public List<Ticket> getByImmat(String immat);
 
 	public void removeVehiculeFromId(Integer id);
 

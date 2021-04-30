@@ -21,4 +21,5 @@ public interface TicketManager {
 	public Ticket getByVehiculeAndDepart(Integer id);
 
 	public List<Ticket> getByVehicule(Integer id);
+	List<Ticket> getByVehiculeImmat(String immat);
 }
